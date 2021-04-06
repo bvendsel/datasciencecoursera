@@ -18,9 +18,10 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
 
 complete <- function(directory, id = 1:332){ 
   analysis_data <- data.frame()
+  names(analysis_data) <- c("id","nobs") 
   data_frame_names <- list.files(pattern = "*.csv")
   for(i in id){
-    analysis_data <- rbind(read.csv(data_frame_names[i]),analysis_data)
+    analysis_data <- rbind(analysis_data,c(i,sum(complete.cases(read.csv(data_frame_names[i])))))
   }
-  
+  return(analysis_data)
   }
