@@ -16,3 +16,4 @@ columnmean <- function(y, removeNA = TRUE){
     }
     means
 }
+
