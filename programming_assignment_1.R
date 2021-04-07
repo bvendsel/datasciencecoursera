@@ -41,14 +41,15 @@ complete <- function(directory, id = 1:332){
 
 
 corr <- function(directory, threshold = 0) {
-  analysis_data <- data.frame()
+  analysis_data <- c()
   data_frame_names <- list.files(pattern = "*.csv")
-  for(i in length(data_frame_names)) {
-    if(sum(complete.cases(read.csv(data_frame_names[i]))) >= threshold){
-      analysis_data <- rbind(read.csv(data_frame_names[i]),analysis_data)
+  for(i in 1:length(data_frame_names)) {
+    sensor <- read.csv(data_frame_names[i])
+    if(sum(complete.cases(sensor)) > threshold){
+      analysis_data <- c(analysis_data,cor(sensor[,"sulfate"],sensor[,"nitrate"], use = "complete.obs"))
     } else {
+      analysis_data<-c(analysis_data, as.numeric())
     }
-  
   }
-  cor(analysis_data$sulfate,analysis_data$nitrate, use = "complete.obs")
+ return(analysis_data)
 }
